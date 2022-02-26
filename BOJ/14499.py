@@ -1,6 +1,5 @@
 # https://www.acmicpc.net/problem/14499
 import sys
-
 input = sys.stdin.readline
 d = {1: (0, 1), 2: (0, -1), 3: (-1, 0), 4: (1, 0)}
 
