@@ -1,5 +1,4 @@
 # https://www.acmicpc.net/problem/17822
-# 11:26
 from collections import deque
 
 direction = [(-1, 0), (0, 1), (1, 0), (0, -1)]
