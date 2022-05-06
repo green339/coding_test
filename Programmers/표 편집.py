@@ -33,3 +33,39 @@ def solution(n, k, cmd):
         answer[idx] = 'X'
     answer = ''.join(answer)
     return answer
+
+
+def solution_v2(n, k, cmd):
+    link = dict()
+    delete = []
+    cur = k
+    for i in range(n):
+        link[i] = [i - 1, i + 1]
+    for c in cmd:
+        c = c.split()
+        if c[0] == "U":
+            for _ in range(int(c[1])):
+                cur = link[cur][0]
+        elif c[0] == "D":
+            for _ in range(int(c[1])):
+                cur = link[cur][1]
+        elif c[0] == "C":
+            delete.append(cur)
+            if link[cur][0] != -1:  # 삭제하는 행이 맨 위 행이 아닌 경우
+                link[link[cur][0]][1] = link[cur][1]
+            if link[cur][1] == n:  # 삭제하는 행이 가장 마지막 행인 경우
+                cur = link[cur][0]
+            else:
+                link[link[cur][1]][0] = link[cur][0]
+                cur = link[cur][1]
+        elif c[0] == "Z":
+            idx = delete.pop()
+            if link[idx][1] != n:
+                link[link[idx][1]][0] = idx
+            if link[idx][0] != -1:
+                link[link[idx][0]][1] = idx
+    answer = ['O'] * n
+    for d in delete:
+        answer[d] = 'X'
+
+    return ''.join(answer)
