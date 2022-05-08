@@ -14,3 +14,23 @@ def solution(board, moves):
             board[j][i - 1] = 0
             break
     return answer
+
+
+def solution_v2(board, moves):
+    n = len(board)
+    answer = 0
+    arr = [[] for _ in range(n)]
+    for i in range(n - 1, -1, -1):
+        for j in range(n):
+            if board[i][j]:
+                arr[j].append(board[i][j])
+    stack = []
+    for m in moves:
+        if arr[m - 1]:
+            doll = arr[m - 1].pop()
+            if stack and stack[-1] == doll:
+                stack.pop()
+                answer += 2
+            else:
+                stack.append(doll)
+    return answer
