@@ -13,3 +13,18 @@ def solution(progresses, speeds):
             answer.append(1)
             prior = temp
     return answer
+
+
+
+def solution_v2(progresses, speeds):
+    answer = []
+    temp = 0
+    for p, s in zip(progresses, speeds):
+        cost = math.ceil((100 - p) / s)
+        if temp:
+            if temp >= cost:
+                answer[-1] += 1
+        else:
+            answer.append(1)
+            temp = cost
+    return answer
