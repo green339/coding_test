@@ -9,7 +9,7 @@ def solution(bridge_length, weight, truck_weights):
     bw = 0  # 다리 무게
     for truck in truck_weights:
         cnt = 0
-        while bw + truck > weight or len(bridge) + 1 > bridge_length: # 이번 타임에 트럭이 들어올 수 있도록 정리
+        while bw + truck > weight or len(bridge) + 1 > bridge_length:  # 이번 타임에 트럭이 들어올 수 있도록 정리
             bw -= bridge.popleft()
             last = in_time.popleft() + bridge_length
             cnt += 1
@@ -30,3 +30,21 @@ def solution(bridge_length, weight, truck_weights):
             bw -= bridge.popleft()
             last = in_time.popleft() + bridge_length
     return in_time[-1] + bridge_length
+
+
+def solution_v2(bridge_length, weight, truck_weights):
+    answer = 0
+    q = deque(truck_weights)
+    cur_weight = 0
+    bridge = deque()
+    while q:
+        while cur_weight + q[0] > weight or len(bridge) >= bridge_length:
+            c, t = bridge.popleft()
+            cur_weight -= c
+            answer = t + bridge_length
+        if bridge and bridge[-1][1] >= answer:
+            answer = bridge[-1][1] + 1
+        bridge.append((q.popleft(), answer))
+        cur_weight += bridge[-1][0]
+        answer += 1
+    return answer + bridge_length
