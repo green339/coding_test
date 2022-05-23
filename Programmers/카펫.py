@@ -9,3 +9,11 @@ def solution(brown, yellow):
             if w + h == sum_w_h:
                 print(w, h)
                 return w, h
+
+
+def solution_v2(brown, yellow):
+    for y in range(1, int(yellow ** 0.5) + 1):
+        if not yellow % y:
+            if brown == 4 + (y + yellow // y) * 2:
+                break
+    return [yellow // y + 2, y + 2]
