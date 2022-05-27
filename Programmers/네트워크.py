@@ -1,5 +1,5 @@
 # https://programmers.co.kr/learn/courses/30/lessons/43162
-from collections import deque
+from collections import deque, defaultdict
 
 
 def solution(n, computers):
@@ -18,4 +18,35 @@ def solution(n, computers):
                     q.append(dx)
                     visited[dx] = 1
         answer += 1
+    return answer
+
+
+# 220527
+def bfs(start):
+    q = deque()
+    q.append(start)
+    visited[start] = 1
+    while q:
+        x = q.popleft()
+        for nx in board[x]:
+            if not visited[nx]:
+                visited[nx] = 1
+                q.append(nx)
+    return 1
+
+
+def solution_v2(n, computers):
+    answer = 0
+    global visited
+    visited = [0] * n
+    global board
+    board = defaultdict(set)
+    for i in range(n):
+        for j in range(n):
+            if computers[i][j]:
+                board[i].add(j)
+                board[j].add(i)
+    for i in range(n):
+        if not visited[i]:
+            answer += bfs(i)
     return answer
