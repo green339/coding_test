@@ -24,3 +24,28 @@ def solution(n, edge):
     answer = distance.count(distance[0])
 
     return answer
+
+
+def solution_v2(n, edge):
+    visited = [0] * (n + 1)
+    board = defaultdict(set)
+    for n1, n2 in edge:
+        board[n1].add(n2)
+        board[n2].add(n1)
+    visited[1] = 1
+    answer = 0
+    dist = 0
+    q = deque()
+    q.append(1)
+    while q:
+        x = q.popleft()
+        if visited[x] == dist:
+            answer += 1
+        elif visited[x] > dist:
+            dist = visited[x]
+            answer = 1
+        for b in board[x]:
+            if not visited[b]:
+                q.append(b)
+                visited[b] = visited[x] + 1
+    return answer
