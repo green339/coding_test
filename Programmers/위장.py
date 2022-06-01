@@ -12,3 +12,13 @@ def solution(clothes):
         answer *= (cs + 1)
 
     return answer - 1
+
+
+def solution_v2(clothes):
+    closet = defaultdict(int)
+    answer = 1
+    for c, t in clothes:
+        closet[t] += 1
+    for v in closet.values():
+        answer *= v + 1
+    return answer - 1
