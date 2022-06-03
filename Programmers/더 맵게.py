@@ -11,3 +11,18 @@ def solution(scoville, K):
         heapq.heappush(scoville, x + 2 * y)
         answer += 1
     return answer if scoville[0] >= K else -1
+
+
+def solution_v2(scoville, K):
+    heapq.heapify(scoville)
+    answer = 0
+    x = heapq.heappop(scoville)
+    while x < K:
+        if scoville:
+            y = heapq.heappop(scoville)
+            x = heapq.heappushpop(scoville, x + 2 * y)
+        else:
+            answer = -1
+            break
+        answer += 1
+    return answer
