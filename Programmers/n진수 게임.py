@@ -20,3 +20,23 @@ def solution(n, t, m, p):
     for s in range(p - 1, t * m, m):
         answer += string[s]
     return answer
+
+
+def convert(x, n):
+    if not x:
+        return '0'
+    n_chars = '0123456789ABCDEF'
+    result = ''
+    while x:
+        x, q = divmod(x, n)
+        result = n_chars[q] + result
+    return result
+
+
+def solution_v2(n, t, m, p):
+    number = ''
+    i = 0
+    while len(number) < t * m:
+        number += convert(i, n)
+        i += 1
+    return number[p - 1::m][:t]
