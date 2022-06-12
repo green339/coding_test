@@ -9,3 +9,12 @@ def solution(n):
     for i, x in enumerate(three[::-1]):
         answer += x * (3 ** i)
     return answer
+
+
+def solution_v2(n):
+    nn = ''
+    while n:
+        n, r = divmod(n, 3)
+        nn += str(r)
+    answer = int(nn, 3)
+    return answer
