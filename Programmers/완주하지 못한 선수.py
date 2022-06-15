@@ -8,3 +8,9 @@ def solution(participant, completion):
     for c in completion:
         temp -= hash(c)
     return d[temp]
+
+def solution_v2(participant, completion):
+    c=Counter(participant)-Counter(completion)
+    return list(c.keys())[0]
+
+from collections import Counter
