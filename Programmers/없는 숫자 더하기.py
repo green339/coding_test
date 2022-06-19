@@ -4,3 +4,7 @@ def solution(numbers):
     nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     answer = sum(set(nums) - set(numbers))
     return answer
+
+
+def solution_v2(numbers):
+    return 45 - sum(numbers)
