@@ -14,3 +14,13 @@ def solution(s):
             stack.append(e)
 
     return 0 if stack else 1
+
+
+def solution_v2(s):
+    answer = []
+    for i in s:
+        if answer and answer[-1] == i:
+            answer.pop()
+        else:
+            answer.append(i)
+    return int(not answer)
