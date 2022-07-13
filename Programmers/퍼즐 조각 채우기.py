@@ -93,3 +93,79 @@ def solution(game_board, table):
                         continue
                     break
     return answer
+
+# 공통 부분 함수로 만들기
+def solution_v2(game_board, table):
+    def rotate90(arr):
+        min_x, min_y = 6, 6
+        result = []
+        for ax, ay in arr:
+            rx, ry = -ay, ax
+            min_x, min_y = min(rx, min_x), min(ry, min_y)
+            result.append([rx, ry])
+        for r in range(len(result)):
+            result[r][0] -= min_x
+            result[r][1] -= min_y
+        return result
+
+    def bfs(flag):
+        if flag:
+            table[x][y] = 0
+        else:
+            game_board[x][y] = 1
+        q = deque()
+        q.append((x, y))
+        tile = []
+        min_i, min_j = x, y
+        tile.append([x, y])
+        while q:
+            i, j = q.popleft()
+            for di, dj in d:
+                ni, nj = i + di, j + dj
+                if -1 < ni < n and -1 < nj < n:
+                    if flag and table[ni][nj]:
+                        table[ni][nj] = 0
+                    elif not flag and not game_board[ni][nj]:
+                        game_board[ni][nj] = 1
+                    else:
+                        continue
+                    q.append((ni, nj))
+                    tile.append([ni, nj])
+                    min_i, min_j = min(ni, min_i), min(nj, min_j)
+        for t in range(len(tile)):
+            tile[t][0] -= min_i
+            tile[t][1] -= min_j
+        return tile
+
+    n = len(table)
+    answer = 0
+    d = [(-1, 0), (0, 1), (1, 0), (0, -1)]
+    # 테이블에서 조각 찾기
+    puzzles = defaultdict(list)
+    for x in range(n):
+        for y in range(n):
+            if table[x][y]:
+                pz = bfs(1)
+                puzzles[len(pz)].append(pz)
+    # 빈공간 찾아서 넣기
+    for x in range(n):
+        for y in range(n):
+            if not game_board[x][y]:
+                sc = bfs(0)
+                k = len(sc)
+                sc.sort()
+                for vi, v in enumerate(puzzles[k]):
+                    rv = deepcopy(v)
+                    for t in range(4):
+                        rv = sorted(rotate90(rv))
+                        for a, b in zip(rv, sc):
+                            if a != b:
+                                break
+                        else:
+                            answer += k
+                            puzzles[k].pop(vi)
+                            break
+                    else:
+                        continue
+                    break
+    return answer
