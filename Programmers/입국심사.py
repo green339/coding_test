@@ -16,3 +16,19 @@ def solution(n, times):
         else:
             start = mid + 1
     return answer
+
+
+def solution(n, times):
+    times.sort()
+    start = times[0]
+    end = times[-1] * n
+    while start < end:
+        mid = (start + end) // 2
+        cnt = 0
+        for t in times:
+            cnt += mid // t
+        if cnt >= n:
+            end = mid
+        else:
+            start = mid + 1
+    return start
