@@ -19,3 +19,20 @@ def solution(N, number):
     else:
         return -1
     return i
+
+
+def solution_v2(N, number):
+    dp = [set() for _ in range(9)]
+    for cnt in range(1, 9):  # N 사용횟수
+        dp[cnt].add(int(str(N) * cnt))
+        for i in range(1, cnt):
+            for x in dp[i]:
+                for y in dp[cnt - i]:
+                    if y:
+                        dp[cnt].add(x // y)
+                    dp[cnt].add(x + y)
+                    dp[cnt].add(x - y)
+                    dp[cnt].add(x * y)
+        if number in dp[cnt]:
+            return cnt
+    return -1
