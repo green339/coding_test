@@ -12,5 +12,7 @@ def solution(n, a, b):
         a = math.ceil(a / 2)
         b = math.ceil(b / 2)
     return answer
-# 트리와 비트로 고려 (풀이참고)
-#    return ((a-1)^(b-1)).bit_length()
+
+
+def solution_v2(n,a,b):
+    return ((a-1)^(b-1)).bit_length()
