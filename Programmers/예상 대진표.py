@@ -14,5 +14,5 @@ def solution(n, a, b):
     return answer
 
 
-def solution_v2(n,a,b):
-    return ((a-1)^(b-1)).bit_length()
+def solution_v2(n, a, b):
+    return ((a - 1) ^ (b - 1)).bit_length()
