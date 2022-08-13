@@ -7,3 +7,6 @@ def solution(s):
         return s[mid - 1] + s[mid]
     else:
         return s[mid]
+
+def solution_v2(s):
+    return s[(len(s) - 1) // 2:len(s) // 2 + 1]
