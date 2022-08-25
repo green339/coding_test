@@ -18,3 +18,25 @@ def solution(queue1, queue2):
             dq1.append(dq2.popleft())
             one += dq1[-1]
     return -1
+
+
+# 투포인터
+def solution_v2(queue1, queue2):
+    answer = 0
+    q = queue1 + queue2
+    target = sum(q) / 2
+    left = 0
+    right = len(queue1) - 1
+    cur = sum(queue1)
+    while right <= len(q):
+        if cur == target:
+            return answer
+        answer += 1
+        if cur > target:
+            cur -= q[left]
+            left += 1
+        else:
+            right += 1
+            if right < len(q):
+                cur += q[right]
+    return -1
