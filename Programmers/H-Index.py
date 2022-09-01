@@ -6,3 +6,9 @@ def solution(citations):
         if cnt >= h:
             return cnt
     return len(citations)
+
+
+def solution_v2(citations):
+    citations.sort(reverse=True)
+    return max(map(min, enumerate(citations, start=1)))
+
