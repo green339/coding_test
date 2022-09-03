@@ -8,3 +8,11 @@ def solution(s):
         elif i.lower() == "p":
             answer -= 1
     return not answer
+
+
+from collections import Counter
+
+
+def solution_v2(s):
+    c = Counter(s.lower())
+    return c['y'] == c['p']
