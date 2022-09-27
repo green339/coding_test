@@ -1,49 +1,22 @@
+# https://school.programmers.co.kr/learn/courses/30/lessons/118670
 from collections import deque
 
 
 def solution(rc, operations):
-    def func(flag, k):
-        if flag == "ShiftRow":
-            k %= row
-            rc.rotate(k)
-        else:
-            total = 2 * row + 2 * col - 4
-            print(total)
-            k %= total
-            print(rc[-1])
-            if k==total/2:
-                tmp=rc[-1]
-                rc[-1]=deque(reversed(rc[0]))
-                rc[0]=deque(reversed(tmp))
-                print(rc)
-                for i in range(1,row-1):
-                    tmp=rc[0][i]
-                    rc[i][0]=rc[row-i-1][-1]
-                    rc[row-i-1][-1]=tmp
-            else:
-                i=0
-                j=0
-                tmp=0
-                change=0
-                # while change<total:
-
-    answer = [[]]
-    rc = deque(deque(r) for r in rc)
-    row = len(rc)
-    col = len(rc[0])
-    prior = ''
-    cnt = 0
+    rows = deque(deque(r[1:-1]) for r in rc)
+    tmp = deque(map(deque, zip(*rc)))
+    cols = deque([tmp[0], tmp[-1]])
     for op in operations:
-        if op != prior and cnt:
-            func(op, cnt)
-            cnt = 1
-            prior = op
+        if op == "ShiftRow":
+            rows.rotate(1)
+            cols[0].rotate(1)
+            cols[1].rotate(1)
         else:
-            cnt += 1
-            prior = op
-    print(prior, cnt)
-    func(prior, cnt)
-    print(rc)
-    return answer
-
-solution([[1, 2, 3], [4, 5, 6], [7, 8, 9]],["Rotate", "Rotate", "Rotate", "Rotate"])
+            rows[-1].append(cols[-1].pop())
+            cols[0].append(rows[-1].popleft())
+            rows[0].appendleft(cols[0].popleft())
+            cols[-1].appendleft(rows[0].pop())
+    rows = deque(map(deque, zip(*rows)))
+    rows.appendleft(cols[0])
+    rows.append(cols[1])
+    return list(zip(*rows))
